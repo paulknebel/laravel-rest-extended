@@ -1,0 +1,22 @@
+{
+  "name": "paulknebel/laravel-rest-extended",
+  "description": "A simple trait to add useful features to Laravel's RESTful functionality",
+  "license": "mit",
+  "authors": [
+    {
+      "name": "Paul Knebel",
+      "email": "p.a.knebel@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "paulknebel\\LaravelRestExtended\\": "src/"
+    }
+  },
+  "require": {
+    "league/fractal": "^0.17.0",
+    "illuminate/database": ">=5.1 <6.0.0",
+    "illuminate/http": ">=5.1 <6.0.0",
+    "illuminate/pagination": ">=5.1 <6.0.0"
+  }
+}
