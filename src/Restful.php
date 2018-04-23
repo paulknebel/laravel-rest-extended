@@ -1,6 +1,6 @@
 <?php
 
-namespace paulknebel\LaravelRestExtended;
+namespace PaulKnebel\LaravelRestExtended;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ trait Restful
 {
     /** @var array Operators that are supported */
     private static $acceptedOperators = ['NOT', 'GT', 'GTE', 'LT', 'LTE', 'EQ', 'LIKE'];
-
+    private $defaultOrderBy = '';
     private static $filterableFields = null;
 
     /**
@@ -118,7 +118,7 @@ trait Restful
      */
     private function applyOrderToQuery($query, Request $request)
     {
-        $orderBy = $request->input('_order', '');
+        $orderBy = $request->input('_order', $this->defaultOrderBy);
 
         if (!$orderBy) {
             return;
