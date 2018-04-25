@@ -34,7 +34,7 @@ The package is at a very early stage right now. I currently intend to add featur
 The easiest way to get started is to use the `RestfulActions` trait. It provides some actions that directly map to Laravel's own "resource" actions
 
  ```php
- use paulknebel\LaravelRestExtended\Restful;
+ use PaulKnebel\LaravelRestExtended\Restful;
 
 class ResourceApiController extends Controller {
 	use RestfulActions;
