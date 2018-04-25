@@ -1,24 +1,27 @@
 <?php
 
-namespace paulknebel\LaravelRestExtended;
+namespace PaulKnebel\LaravelRestExtended;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\ResourceAbstract;
 use League\Fractal\TransformerAbstract as Transformer;
+use League\Fractal\Manager;
 
 /**
  * A set of plug-and-play actions that can be hooked directly into a controller
  * @property Model rootModel
  * @property Transformer rootTransformer
+ * @property Request request
  * @package App\Traits
  */
-trait RestfulActionsTrait
+trait RestfulActions
 {
-    use RestfulTrait;
+    use Restful;
 
     /**
      * Plug-and-play show action
@@ -61,7 +64,6 @@ trait RestfulActionsTrait
 
     /**
      * Plug-and-play create action
-     * @note This does not cover validation
      * @return array
      */
     private function restfulStoreAction(array $inputValidationRules = [])
@@ -80,7 +82,6 @@ trait RestfulActionsTrait
 
     /**
      * Plug-and-play UPDATE action (PATCH)
-     * @note This does not cover validation
      * @param $id
      * @param array $inputValidationRules
      * @return array
@@ -136,7 +137,7 @@ trait RestfulActionsTrait
         $this->fractal->parseIncludes($this->request->get('_include', ''));
         $mutated = new $mutateInto($data, $this->rootTransformer);
 
-        if ($this->paginator !== null) {
+        if (isset($this->paginator) && $this->paginator !== null) {
             $mutated->setPaginator(new IlluminatePaginatorAdapter($this->paginator));
         }
 
@@ -170,7 +171,17 @@ trait RestfulActionsTrait
         return $this;
     }
 
+    private function setRequest(Request $request)
+    {
+        $this->request = $request;
+        return $this;
+    }
 
+    public function setFractal(Manager $fractal)
+    {
+        $this->fractal = $fractal;
+        return $this;
+    }
 
 
 }
