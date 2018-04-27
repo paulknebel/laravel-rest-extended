@@ -68,7 +68,10 @@ trait RestfulActions
      */
     private function restfulStoreAction(array $inputValidationRules = [])
     {
-        $this->validate($this->request, $inputValidationRules);
+        if($inputValidationRules) {
+            $this->validate($this->request, $inputValidationRules);
+        }
+        
         $attributes = $this->request->input();
 
         try {
@@ -88,7 +91,9 @@ trait RestfulActions
      */
     private function restfulUpdateAction($id, array $inputValidationRules = [])
     {
-        $this->validate($this->request, $inputValidationRules);
+        if($inputValidationRules) {
+            $this->validate($this->request, $inputValidationRules);
+        }
         $data = $this->rootModel->find($id);
 
         $attributes = $this->request->input();
