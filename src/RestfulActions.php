@@ -23,6 +23,12 @@ trait RestfulActions
 {
     use Restful;
 
+    /** @var Item           Generic placeholder for endpoints that use single item */
+    protected $item;
+
+    /** @var Collection     Generic placeholder for endpoints that use collections  */
+    protected $collection;
+
     /**
      * Plug-and-play show action
      * @note If you need more complexity use other methods - this is a one-size-fits-all method
@@ -37,8 +43,8 @@ trait RestfulActions
         $this->applyPagination($query, $this->request);
 
         try {
-            $data = $query->get();
-            return $this->mutateData($data, new Collection())->toArray();
+            $this->collection = $query->get();
+            return $this->mutateData($this->collection, new Collection())->toArray();
         } catch (QueryException $e) {
             return $this->queryErrorResponse($e);
         }
@@ -55,8 +61,8 @@ trait RestfulActions
     private function restfulShowAction($id)
     {
         try {
-            $data = $this->rootModel->find($id);
-            return $this->mutateData($data, new Item())->toArray();
+            $this->item = $this->rootModel->find($id);
+            return $this->mutateData($this->item, new Item())->toArray();
         } catch (QueryException $e) {
             return $this->queryErrorResponse($e);
         }
@@ -75,8 +81,8 @@ trait RestfulActions
         $attributes = $this->request->input();
 
         try {
-            $data = $this->rootModel->create($attributes);
-            return $this->mutateData($data, new Item())->toArray();
+            $this->item = $this->rootModel->create($attributes);
+            return $this->mutateData($this->item, new Item())->toArray();
         } catch (QueryException $e) {
             return $this->queryErrorResponse($e);
         }
@@ -93,13 +99,13 @@ trait RestfulActions
         if($inputValidationRules) {
             $this->validate($this->request, $inputValidationRules);
         }
-        $data = $this->rootModel->find($id);
+        $this->item = $this->rootModel->find($id);
 
         $attributes = $this->request->input();
 
         try {
-            $data->update($attributes);
-            return $this->mutateData($data, new Item())->toArray();
+            $this->item->update($attributes);
+            return $this->mutateData($this->item, new Item())->toArray();
         } catch (QueryException $e) {
             return $this->queryErrorResponse($e);
         }
@@ -113,14 +119,14 @@ trait RestfulActions
      */
     private function restfulDestroyAction($id)
     {
-        $data = $this->rootModel->find($id);
+        $this->item = $this->rootModel->find($id);
 
-        if ($data === null || !is_callable([$this->rootModel, 'delete'])) {
+        if ($this->item === null || !is_callable([$this->rootModel, 'delete'])) {
             throw new \InvalidArgumentException('Cannot delete resource');
         }
 
         try {
-            if ($data->delete() === true) {
+            if ($this->item->delete() === true) {
                 return [
                     'status' => 'successful'
                 ];
