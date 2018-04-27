@@ -75,8 +75,7 @@ trait RestfulActions
         $attributes = $this->request->input();
 
         try {
-            $newId = $this->rootModel->insertGetId($attributes);
-            $data = $this->rootModel->find($newId);
+            $data = $this->rootModel->create($attributes);
             return $this->mutateData($data, new Item())->toArray();
         } catch (QueryException $e) {
             return $this->queryErrorResponse($e);
