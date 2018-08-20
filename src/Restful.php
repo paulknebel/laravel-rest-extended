@@ -154,7 +154,7 @@ trait Restful
      */
     private function isFieldFilterable($field)
     {
-        return in_array($field, (array) $this->rootModel['fillable'], true);
+        return in_array($field, (array) $this->rootModel->getFillable(), true);
     }
 
 
