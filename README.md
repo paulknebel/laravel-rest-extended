@@ -18,7 +18,7 @@ The documentation lacking at the moment. Please stand by.
 The package is at a very early stage right now. I currently intend to add features as I need them. 
 
  - Add tests (I've misplaced them somewhere)
- - Remove `laravel/laravel` as a dependancy - Collections and GuzzleHttp will suffix 
+ - ~~Remove `laravel/laravel` as a dependancy - Collections and GuzzleHttp will suffix ~~
  - Improve documentation
  - Finish mapped methods to `RestfulActions`
  - Configuration of `RestfulActions` so that `Restful` does not need to be used
