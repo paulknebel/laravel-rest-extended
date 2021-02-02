@@ -10,10 +10,10 @@
   ],
   "require": {
     "league/fractal": "^0.17.0",
-    "illuminate/database": ">=5.1 <6.0.0",
-    "illuminate/http": ">=5.1 <6.0.0",
-    "illuminate/pagination": ">=5.1 <6.0.0",
-    "watson/rememberable": "^2.0"
+    "illuminate/database": "^6.0",
+    "illuminate/http": "^6.0",
+    "illuminate/pagination": "^6.0",
+    "watson/rememberable": "^3.0"
   },
   "autoload": {
     "psr-4": {
